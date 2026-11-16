@@ -10,7 +10,7 @@ proyecto-progress-training/
 ├── app/
 │   ├── core/                  # Configuración global y dependencias
 │   │   ├── __init__.py
-│   │   ├── database.py        # Conexión SQLAlchemy con SQL Server
+│   │   ├── database.py        # Conexión SQLAlchemy con PostgreSQL
 │   │   └── security.py        # Cifrado de contraseñas y autenticación por rol (RNF-03, RF-13)
 │   │
 │   ├── models/                # Modelos de SQLAlchemy (Mapeo de la Base de Datos - C4 Nivel 4)
@@ -56,14 +56,14 @@ proyecto-progress-training/
 │   │
 │   └── main.py                # Punto de entrada de la aplicación FastAPI
 │
-├── requirements.txt           # Dependencias (FastAPI, uvicorn, sqlalchemy, pyodbc/pymssql, pydantic)
+├── requirements.txt           # Dependencias (FastAPI, SQLAlchemy, PostgreSQL, pydantic)
 └── README.md
 ```
 
 ### Carpetas y responsabilidades
 
 - **`app/core/`**: configuración compartida de la aplicación. `database.py`
-  centraliza la conexión a SQL Server y `security.py` contiene las utilidades
+  centraliza la conexión a PostgreSQL y `security.py` contiene las utilidades
   de autenticación, autorización y seguridad.
 - **`app/models/`**: modelos ORM de SQLAlchemy que representan las entidades
   del sistema, como usuarios, clientes, membresías, pagos, productos e
@@ -105,7 +105,17 @@ respuesta validada y serializada mediante los esquemas.
    pip install -r requirements.txt
    ```
 
-3. Inicia el servidor de desarrollo desde la raíz del proyecto:
+3. Configura en el archivo `.env` de la raíz `DATABASE_URL` con una URL de
+   conexión de SQLAlchemy para PostgreSQL, por ejemplo:
+
+   ```env
+   DATABASE_URL=postgresql+psycopg2://usuario:contraseña@servidor:5432/base_de_datos
+   ```
+
+   Si el usuario o la contraseña contienen caracteres especiales, deben estar
+   codificados para URL.
+
+4. Inicia el servidor de desarrollo desde la raíz del proyecto:
 
    ```bash
    uvicorn app.main:app --reload
@@ -113,5 +123,6 @@ respuesta validada y serializada mediante los esquemas.
 
 La documentación interactiva de la API estará disponible en `/docs`.
 
-La configuración de SQL Server y las funcionalidades de los módulos se
-implementarán en sus respectivos archivos.
+La conexión a PostgreSQL se configura en `app/core/database.py`. Los
+repositorios pueden recibir sesiones con la dependencia `get_db`; la creación
+de tablas y los cambios de esquema deben gestionarse mediante migraciones.
