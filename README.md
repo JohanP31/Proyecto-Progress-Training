@@ -4,7 +4,7 @@ API para la gestión de un centro de entrenamiento, construida con FastAPI y
 SQLAlchemy.
 
 ## Estructura del proyecto
-
+```text
 proyecto-progress-training/
 │
 ├── app/
@@ -58,6 +58,7 @@ proyecto-progress-training/
 │
 ├── requirements.txt           # Dependencias (FastAPI, uvicorn, sqlalchemy, pyodbc/pymssql, pydantic)
 └── README.md
+```
 
 ### Carpetas y responsabilidades
 
