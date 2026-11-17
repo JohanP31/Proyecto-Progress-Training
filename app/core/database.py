@@ -12,7 +12,8 @@ load_dotenv(_PROJECT_ROOT / ".env")
 _database_url = os.getenv("DATABASE_URL")
 if not _database_url:
     raise RuntimeError(
-        "No se encontró DATABASE_URL. Configura la variable en el archivo .env."
+        "No se encontró DATABASE_URL. "
+        "Configura la variable en el archivo .env."
     )
 
 engine = create_engine(_database_url, pool_pre_ping=True)

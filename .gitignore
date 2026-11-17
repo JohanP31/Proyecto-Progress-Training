@@ -51,8 +51,3 @@ tempCodeRunnerFile.py
 # ==========================================
 .DS_Store
 Thumbs.db
-.env
-__pycache__/
-*.pyc
-venv/
-.venv/

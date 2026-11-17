@@ -14,8 +14,12 @@ class ClienteModel(Base):
     estado = Column(String(20), default="Activo")
 
     membresias = relationship(
-        "MembresiaModel", back_populates="cliente", cascade="all, delete-orphan"
+        "MembresiaModel",
+        back_populates="cliente",
+        cascade="all, delete-orphan",
     )
     ingresos = relationship(
-        "RegistroIngresoModel", back_populates="cliente", cascade="all, delete-orphan"
+        "RegistroIngresoModel",
+        back_populates="cliente",
+        cascade="all, delete-orphan",
     )

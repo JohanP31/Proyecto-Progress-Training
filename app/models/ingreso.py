@@ -11,5 +11,9 @@ class RegistroIngresoModel(Base):
     tipo_ingreso = Column(String(50), nullable=False)
 
     cliente_id = Column(Integer, ForeignKey("clientes.id"), nullable=False)
+    # Empleado que registró el ingreso
+    # (lo recibe IngresoFacade.registrarIngreso)
+    empleado_id = Column(Integer, ForeignKey("empleados.id"), nullable=False)
 
     cliente = relationship("ClienteModel", back_populates="ingresos")
+    empleado = relationship("EmpleadoModel")
