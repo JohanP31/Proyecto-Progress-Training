@@ -1,3 +1,56 @@
+# ==========================================
+# PYTHON & CACHÉ
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# ==========================================
+# ENTORNOS VIRTUALES
+# ==========================================
+.venv/
+venv/
+ENV/
+env/
+.envrc
+
+# ==========================================
+# VARIABLES DE ENTORNO Y SECRETOS (CRÍTICO)
+# ==========================================
+.env
+
+# ==========================================
+# BASES DE DATOS LOCALES (Si usas SQLite o respaldos)
+# ==========================================
+*.db
+*.sqlite3
+*.sqlite3-journal
+
+# ==========================================
+# REPORTES Y PRUEBAS (Pytest, Coverage)
+# ==========================================
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# ==========================================
+# IDEs Y EDITORES DE CÓDIGO (VS Code, PyCharm)
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+tempCodeRunnerFile.py
+
+# ==========================================
+# SISTEMA OPERATIVO
+# ==========================================
+.DS_Store
+Thumbs.db
 .env
 __pycache__/
 *.pyc

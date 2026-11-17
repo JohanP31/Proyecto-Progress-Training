@@ -1,5 +1,6 @@
 fastapi
 uvicorn[standard]
 sqlalchemy
-pyodbc
+psycopg2-binary
 pydantic
+python-dotenv
