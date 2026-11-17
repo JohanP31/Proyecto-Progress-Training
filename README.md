@@ -17,16 +17,17 @@ proyecto-progress-training/
 │   │   ├── __init__.py
 │   │   ├── usuario.py         # Clases Usuario, Empleado, Administrador
 │   │   ├── cliente.py         # Entidad Cliente
-│   │   ├── membresia.py       # Entidad Membresía y clases de Estado
+│   │   ├── membresia.py       # Entidad Membresía
 │   │   ├── pago.py            # Entidad Pago
 │   │   ├── ingreso.py         # Entidad RegistroIngreso
-│   │   ├── producto.py        # Entidad Producto y VentaProducto[cite: 2]
-│   │   ├── asistencia.py      # Entidad Asistencia[cite: 2]
+│   │   ├── producto.py        # Entidad Producto y VentaProducto
+│   │   ├── asistencia.py      # Entidad Asistencia
 │   │   └── maquina.py         # Entidad Maquina y Mantenimiento
 │   │
 │   ├── schemas/               # Esquemas Pydantic (Validación de datos de entrada/salida HTTP)
 │   │   ├── cliente_schema.py
 │   │   ├── membresia_schema.py
+│   │   ├── pago_schema.py
 │   │   ├── ingreso_schema.py
 │   │   ├── producto_schema.py
 │   │   ├── asistencia_schema.py
@@ -35,6 +36,8 @@ proyecto-progress-training/
 │   ├── repositories/          # Capa de Acceso a Datos (Repositorios - C4 Nivel 3)
 │   │   ├── cliente_repository.py
 │   │   ├── membresia_repository.py
+│   │   ├── pago_repository.py
+│   │   ├── usuario_repository.py
 │   │   ├── ingreso_repository.py
 │   │   ├── producto_repository.py
 │   │   ├── asistencia_repository.py
@@ -45,18 +48,18 @@ proyecto-progress-training/
 │   │   ├── membresia_factory.py # Patrón Factory Method (Crea membresías por tipo - HU-04)
 │   │   └── membresia_state.py # Patrón State (MembresiaVigente / MembresiaVencida - HU-03)
 │   │
-│   ├── routers/               # Endpoints de la API FastAPI (Controladores REST)[cite: 1]
-│   │   ├── auth.py            # Autenticación y roles (RF-13)[cite: 2]
-│   │   ├── clientes.py        # Gestión de clientes (HU-01)[cite: 2]
+│   ├── routers/               # Endpoints de la API FastAPI (Controladores REST)
+│   │   ├── auth.py            # Autenticación y roles (RF-13)
+│   │   ├── clientes.py        # Gestión de clientes (HU-01)
 │   │   ├── ingresos.py        # Control de ingresos (HU-02, HU-03)
 │   │   ├── membresias.py      # Renovación y registro de membresías (HU-04)
 │   │   ├── tienda.py          # Inventario y ventas de suplementos (HU-05)
 │   │   ├── asistencia.py      # Control de asistencia de empleados (HU-06)
-│   │   └── maquinas.py        # Gestión de estado de máquinas (HU-07)[cite: 1]
+│   │   └── maquinas.py        # Gestión de estado de máquinas (HU-07)
 │   │
 │   └── main.py                # Punto de entrada de la aplicación FastAPI
 │
-├── requirements.txt           # Dependencias (FastAPI, SQLAlchemy, PostgreSQL, pydantic)
+├── requirements.txt           # Dependencias (FastAPI, SQLAlchemy, psycopg, pydantic)
 └── README.md
 ```
 
@@ -105,11 +108,11 @@ respuesta validada y serializada mediante los esquemas.
    pip install -r requirements.txt
    ```
 
-3. Configura en el archivo `.env` de la raíz `DATABASE_URL` con una URL de
-   conexión de SQLAlchemy para PostgreSQL, por ejemplo:
+3. Crea un archivo `.env` en la raíz y configura `DATABASE_URL` con la URL de
+   conexión de Neon (PostgreSQL), por ejemplo:
 
    ```env
-   DATABASE_URL=postgresql+psycopg2://usuario:contraseña@servidor:5432/base_de_datos
+   DATABASE_URL=postgresql+psycopg://usuario:contraseña@servidor.neon.tech/base_de_datos?sslmode=require
    ```
 
    Si el usuario o la contraseña contienen caracteres especiales, deben estar
@@ -125,4 +128,6 @@ La documentación interactiva de la API estará disponible en `/docs`.
 
 La conexión a PostgreSQL se configura en `app/core/database.py`. Los
 repositorios pueden recibir sesiones con la dependencia `get_db`; la creación
-de tablas y los cambios de esquema deben gestionarse mediante migraciones.
+de tablas se hace al arrancar con `Base.metadata.create_all()` (en `main.py`).
+Ojo: `create_all()` no modifica tablas que ya existen; los cambios de columnas
+se aplican a mano en el SQL Editor de Neon.

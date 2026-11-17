@@ -11,7 +11,8 @@ class MembresiaModel(Base):
     fecha_inicio = Column(Date, nullable=False)
     fecha_fin = Column(Date, nullable=False)
     valor = Column(Float, nullable=False)
-    estado = Column(String(20), nullable=False)
+    # El estado (vigente o vencida) no se guarda como texto:
+    # lo calcula el patrón State a partir de fecha_fin.
 
     cliente_id = Column(Integer, ForeignKey("clientes.id"), nullable=False)
 

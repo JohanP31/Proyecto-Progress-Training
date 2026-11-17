@@ -12,7 +12,9 @@ class MaquinaModel(Base):
     fecha_adquisicion = Column(Date, nullable=True)
 
     mantenimientos = relationship(
-        "MantenimientoModel", back_populates="maquina", cascade="all, delete-orphan"
+        "MantenimientoModel",
+        back_populates="maquina",
+        cascade="all, delete-orphan",
     )
 
 
