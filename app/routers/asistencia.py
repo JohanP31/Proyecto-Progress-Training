@@ -20,8 +20,7 @@ router = APIRouter(prefix="/asistencias", tags=["asistencias"])
 )
 def registrar_asistencia(datos: AsistenciaCreate, db: Session = Depends(get_db)):
     """Registra la entrada o salida de un empleado."""
-    empleado = UsuarioRepository.obtener_empleado_por_id(db, datos.empleado_id)
-    if not empleado:
+    if not UsuarioRepository.existe_empleado(db, datos.empleado_id):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Empleado no encontrado.",
@@ -44,8 +43,7 @@ def registrar_asistencia(datos: AsistenciaCreate, db: Session = Depends(get_db))
 )
 def listar_asistencias_por_empleado(empleado_id: int, db: Session = Depends(get_db)):
     """Consulta el historial de asistencias de un empleado específico."""
-    empleado = UsuarioRepository.obtener_empleado_por_id(db, empleado_id)
-    if not empleado:
+    if not UsuarioRepository.existe_empleado(db, empleado_id):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Empleado no encontrado.",

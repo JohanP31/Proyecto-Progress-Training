@@ -16,5 +16,10 @@ class UsuarioRepository:
         return db.query(UsuarioModel).filter(UsuarioModel.correo == correo).first()
 
     @staticmethod
-    def obtener_empleado_por_id(db: Session, empleado_id: int) -> EmpleadoModel | None:
-        return db.get(EmpleadoModel, empleado_id)
+    def existe_empleado(db: Session, empleado_id: int) -> bool:
+        return (
+            db.query(EmpleadoModel.id)
+            .filter(EmpleadoModel.id == empleado_id)
+            .first()
+            is not None
+        )
