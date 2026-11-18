@@ -1,6 +1,9 @@
+from datetime import date
+
 from sqlalchemy import Column, Integer, String, Date, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from app.core.database import Base
+from app.patterns.membresia_state import MembresiaVencida, MembresiaVigente
 
 
 class MembresiaModel(Base):
@@ -20,3 +23,25 @@ class MembresiaModel(Base):
     pagos = relationship(
         "PagoModel", back_populates="membresia", cascade="all, delete-orphan"
     )
+
+    # --- Patrón State ---
+
+    @property
+    def estado(self):
+        """Devuelve el estado actual según la fecha de fin."""
+        if self.fecha_fin >= date.today():
+            return MembresiaVigente(self)
+        return MembresiaVencida(self)
+
+    @property
+    def nombre_estado(self) -> str:
+        """Nombre del estado para mostrarlo en la API."""
+        return self.estado.nombre
+
+    def permitirIngreso(self) -> bool:
+        """Delega en el estado actual."""
+        return self.estado.permitirIngreso()
+
+    def renovar(self):
+        """Delega en el estado actual: fecha de inicio de la renovación."""
+        return self.estado.renovar()
