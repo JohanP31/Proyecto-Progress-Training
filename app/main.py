@@ -1,6 +1,7 @@
 """Punto de entrada de la API FastAPI."""
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app import models  # noqa: F401  (registra todos los modelos)
 from app.core.database import Base, engine
@@ -11,6 +12,16 @@ from app.routers import asistencia, clientes, ingresos, maquinas, membresias, ti
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Progress Training API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:4200",
+        "http://127.0.0.1:4200",
+    ],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Routers del MVP
 app.include_router(clientes.router)
