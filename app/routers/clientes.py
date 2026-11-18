@@ -32,6 +32,12 @@ def registrar_cliente(datos: ClienteCrear, db: Session = Depends(get_db)):
         )
 
 
+@router.get("", response_model=list[ClienteRespuesta])
+def listar_clientes(db: Session = Depends(get_db)):
+    """Lista todos los clientes (la usa el frontend para elegir uno)."""
+    return ClienteRepository(db).listar()
+
+
 @router.get("/{cliente_id}", response_model=ClienteRespuesta)
 def obtener_cliente(cliente_id: int, db: Session = Depends(get_db)):
     """Consulta un cliente por su id."""
