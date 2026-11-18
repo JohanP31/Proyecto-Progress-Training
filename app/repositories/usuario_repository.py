@@ -36,16 +36,21 @@ class UsuarioRepository:
     @staticmethod
     def obtener_por_documento(db: Session, documento: str) -> UsuarioModel | None:
         return (
+            db.query(UsuarioModel).filter(UsuarioModel.documento == documento).first()
+        )
+
+    @staticmethod
+    def listar_empleados(db: Session) -> list[UsuarioModel]:
+        """Devuelve todos los usuarios que pertenecen al subtipo empleado."""
+        return (
             db.query(UsuarioModel)
-            .filter(UsuarioModel.documento == documento)
-            .first()
+            .filter(UsuarioModel.rol == EmpleadoModel.__mapper__.polymorphic_identity)
+            .all()
         )
 
     @staticmethod
     def existe_empleado(db: Session, empleado_id: int) -> bool:
         return (
-            db.query(EmpleadoModel.id)
-            .filter(EmpleadoModel.id == empleado_id)
-            .first()
+            db.query(EmpleadoModel.id).filter(EmpleadoModel.id == empleado_id).first()
             is not None
         )

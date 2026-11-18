@@ -45,6 +45,12 @@ def registrar_usuario(datos: UsuarioCreate, db: Session = Depends(get_db)):
         ) from None
 
 
+@router.get("/empleados", response_model=list[UsuarioResponse])
+def listar_empleados(db: Session = Depends(get_db)):
+    """Devuelve todos los usuarios que son empleados."""
+    return UsuarioRepository.listar_empleados(db)
+
+
 @router.get("/{usuario_id}", response_model=UsuarioResponse)
 def obtener_usuario(usuario_id: int, db: Session = Depends(get_db)):
     """Consulta los detalles de un usuario interno por su ID único."""
