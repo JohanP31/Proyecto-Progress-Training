@@ -42,7 +42,9 @@ class UsuarioRepository:
         db: Session, documento: str
     ) -> UsuarioModel | None:
         return (
-            db.query(UsuarioModel).filter(UsuarioModel.documento == documento).first()
+            db.query(UsuarioModel)
+            .filter(UsuarioModel.documento == documento)
+            .first()
         )
 
     @staticmethod
@@ -50,13 +52,18 @@ class UsuarioRepository:
         """Devuelve todos los usuarios que pertenecen al subtipo empleado."""
         return (
             db.query(UsuarioModel)
-            .filter(UsuarioModel.rol == EmpleadoModel.__mapper__.polymorphic_identity)
+            .filter(
+                UsuarioModel.rol
+                == EmpleadoModel.__mapper__.polymorphic_identity
+            )
             .all()
         )
 
     @staticmethod
     def existe_empleado(db: Session, empleado_id: int) -> bool:
         return (
-            db.query(EmpleadoModel.id).filter(EmpleadoModel.id == empleado_id).first()
+            db.query(EmpleadoModel.id)
+            .filter(EmpleadoModel.id == empleado_id)
+            .first()
             is not None
         )
