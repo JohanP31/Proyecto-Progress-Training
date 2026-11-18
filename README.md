@@ -126,6 +126,9 @@ respuesta validada y serializada mediante los esquemas.
 
 La documentación interactiva de la API estará disponible en `/docs`.
 
+El backend permite solicitudes desde `http://localhost:4200` y
+`http://127.0.0.1:4200` mediante CORS para el desarrollo local. Reinicia Uvicorn
+después de modificar la configuración de la aplicación.
 ### Control de asistencia
 
 - `POST /asistencias` registra una `Entrada` o una `Salida` para un empleado.
