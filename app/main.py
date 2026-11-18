@@ -4,7 +4,7 @@ from fastapi import FastAPI
 
 from app import models  # noqa: F401  (registra todos los modelos)
 from app.core.database import Base, engine
-from app.routers import clientes, ingresos, maquinas, membresias, tienda
+from app.routers import asistencia, clientes, ingresos, maquinas, membresias, tienda
 
 # Crea en la base de datos las tablas que todavía no existen.
 # Ojo: no modifica tablas que ya existen.
@@ -18,6 +18,7 @@ app.include_router(ingresos.router)
 app.include_router(maquinas.router)
 app.include_router(membresias.router)
 app.include_router(tienda.router)
+app.include_router(asistencia.router)
 
 
 @app.get("/", tags=["health"])
