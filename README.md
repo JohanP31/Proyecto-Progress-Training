@@ -126,6 +126,16 @@ respuesta validada y serializada mediante los esquemas.
 
 La documentación interactiva de la API estará disponible en `/docs`.
 
+### Control de asistencia
+
+- `POST /asistencias` registra una `Entrada` o una `Salida` para un empleado.
+  La salida completa la entrada pendiente más reciente; si no existe, la API
+  responde `409 Conflict`.
+- `GET /asistencias/empleado/{empleado_id}` consulta el historial del empleado.
+
+La respuesta contiene `fecha_entrada` y `fecha_salida`; al registrar una
+entrada, `fecha_salida` queda vacía hasta marcar la salida.
+
 La conexión a PostgreSQL se configura en `app/core/database.py`. Los
 repositorios pueden recibir sesiones con la dependencia `get_db`; la creación
 de tablas se hace al arrancar con `Base.metadata.create_all()` (en `main.py`).
