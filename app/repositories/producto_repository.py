@@ -18,7 +18,11 @@ class ProductoRepository:
 
     @staticmethod
     def obtener_por_id(db: Session, producto_id: int):
-        return db.query(ProductoModel).filter(ProductoModel.id == producto_id).first()
+        return (
+            db.query(ProductoModel)
+            .filter(ProductoModel.id == producto_id)
+            .first()
+        )
 
     @staticmethod
     def crear(db: Session, datos: ProductoCreate):
