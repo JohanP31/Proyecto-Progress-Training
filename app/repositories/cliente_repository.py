@@ -33,3 +33,11 @@ class ClienteRepository:
     def buscar_por_id(self, cliente_id: int) -> ClienteModel | None:
         """Devuelve el cliente con ese id, o None si no existe."""
         return self.db.get(ClienteModel, cliente_id)
+
+    def listar(self) -> list[ClienteModel]:
+        """Devuelve todos los clientes ordenados por nombre."""
+        return (
+            self.db.query(ClienteModel)
+            .order_by(ClienteModel.nombre)
+            .all()
+        )
