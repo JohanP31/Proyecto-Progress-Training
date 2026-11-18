@@ -17,7 +17,11 @@ class MaquinaRepository:
 
     @staticmethod
     def obtener_por_id(db: Session, maquina_id: int):
-        return db.query(MaquinaModel).filter(MaquinaModel.id == maquina_id).first()
+        return (
+            db.query(MaquinaModel)
+            .filter(MaquinaModel.id == maquina_id)
+            .first()
+        )
 
     @staticmethod
     def crear(db: Session, datos: MaquinaCreate):
@@ -32,7 +36,9 @@ class MaquinaRepository:
         return db_maquina
 
     @staticmethod
-    def actualizar_estado(db: Session, maquina: MaquinaModel, nuevo_estado: str):
+    def actualizar_estado(
+        db: Session, maquina: MaquinaModel, nuevo_estado: str
+    ):
         maquina.estado = nuevo_estado
         db.commit()
         db.refresh(maquina)

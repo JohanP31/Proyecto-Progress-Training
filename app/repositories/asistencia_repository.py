@@ -38,7 +38,9 @@ class AsistenciaRepository:
         return asistencia
 
     @staticmethod
-    def obtener_por_empleado(db: Session, empleado_id: int) -> list[AsistenciaModel]:
+    def obtener_por_empleado(
+        db: Session, empleado_id: int
+    ) -> list[AsistenciaModel]:
         return (
             db.query(AsistenciaModel)
             .filter(AsistenciaModel.empleado_id == empleado_id)

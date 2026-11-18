@@ -18,7 +18,9 @@ router = APIRouter(prefix="/asistencias", tags=["asistencias"])
     response_model=AsistenciaResponse,
     status_code=status.HTTP_201_CREATED,
 )
-def registrar_asistencia(datos: AsistenciaCreate, db: Session = Depends(get_db)):
+def registrar_asistencia(
+    datos: AsistenciaCreate, db: Session = Depends(get_db)
+):
     """Registra la entrada o salida de un empleado."""
     if not UsuarioRepository.existe_empleado(db, datos.empleado_id):
         raise HTTPException(
@@ -41,7 +43,9 @@ def registrar_asistencia(datos: AsistenciaCreate, db: Session = Depends(get_db))
     "/empleado/{empleado_id}",
     response_model=list[AsistenciaResponse],
 )
-def listar_asistencias_por_empleado(empleado_id: int, db: Session = Depends(get_db)):
+def listar_asistencias_por_empleado(
+    empleado_id: int, db: Session = Depends(get_db)
+):
     """Consulta el historial de asistencias de un empleado específico."""
     if not UsuarioRepository.existe_empleado(db, empleado_id):
         raise HTTPException(

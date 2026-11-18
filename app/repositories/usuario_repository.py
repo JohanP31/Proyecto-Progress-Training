@@ -31,10 +31,16 @@ class UsuarioRepository:
 
     @staticmethod
     def obtener_por_correo(db: Session, correo: str) -> UsuarioModel | None:
-        return db.query(UsuarioModel).filter(UsuarioModel.correo == correo).first()
+        return (
+            db.query(UsuarioModel)
+            .filter(UsuarioModel.correo == correo)
+            .first()
+        )
 
     @staticmethod
-    def obtener_por_documento(db: Session, documento: str) -> UsuarioModel | None:
+    def obtener_por_documento(
+        db: Session, documento: str
+    ) -> UsuarioModel | None:
         return (
             db.query(UsuarioModel)
             .filter(UsuarioModel.documento == documento)

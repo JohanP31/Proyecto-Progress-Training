@@ -36,7 +36,10 @@ def realizar_venta(datos: VentaProductoCreate, db: Session = Depends(get_db)):
     if producto.stock < datos.cantidad:
         raise HTTPException(
             status_code=400,
-            detail=f"Stock insuficiente. Stock actual disponible: {producto.stock}",
+            detail=(
+                "Stock insuficiente. "
+                f"Stock actual disponible: {producto.stock}"
+            ),
         )
 
     venta = ProductoRepository.registrar_venta(db, producto, datos)

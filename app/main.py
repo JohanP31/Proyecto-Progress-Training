@@ -37,7 +37,8 @@ def health_check() -> dict[str, str]:
     return {"status": "ok"}
 
 
-# Wrap the complete application so CORS headers are present on unhandled errors too.
+# Envuelve toda la aplicación para que el frontend reciba los encabezados
+# CORS incluso cuando hay un error interno.
 app = CORSMiddleware(
     app=app,
     allow_origins=[
